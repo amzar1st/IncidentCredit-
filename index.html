@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Verify service outage credits against immutable SLA terms and public evidence on GenLayer.">
+<title>IncidentCredit | SLA claim verification</title><link rel="icon" href="./mark.svg" type="image/svg+xml">
+<script type="module" src="/web/main.js"></script></head>
+<body><header><div class="wrap mast"><a class="brand" href="./"><img src="./mark.svg" alt="">IncidentCredit</a><span class="network">● &nbsp; StudioNet · 61999</span></div></header>
+<main class="wrap">
+<section class="hero"><p class="eyebrow">GENLAYER / SLA CLAIMS</p><h1>From outage evidence<br>to a verified credit.</h1><p>Inspect regional impact, challenge the evidence, and verify the credit against locked service terms.</p><a id="contract" class="quiet" target="_blank" rel="noopener noreferrer">View deployed contract ↗</a></section>
+<section class="panel" aria-labelledby="lookup-title"><div class="section-head"><div><p class="eyebrow">01 / VERIFY</p><h2 id="lookup-title">Claim inspector</h2></div><span class="tag">FINALIZED CHAIN STATE</span></div>
+<p>The partial-outage demo uses a clearly labeled synthetic report. Both regions are read from the same deployed contract.</p>
+<div class="row"><button id="east" type="button">US East demo</button><button id="west" type="button" class="secondary">EU West demo</button></div>
+<form id="lookup" class="row"><label>Claim or policy ID<input name="id" required pattern="[0-9a-f]{64}" placeholder="64-character lowercase ID"></label><button>Read claim</button><button type="submit" name="policy" class="secondary">Read policy</button></form>
+<p id="read-status" role="status"></p><div id="record"></div></section>
+<section class="panel" aria-labelledby="workflow-title"><p class="eyebrow">02 / ACT</p><h2 id="workflow-title">Prepare a transaction</h2>
+<p>Use the built-in account in GenLayer Studio to sign. This dashboard prepares the method inputs and tracks the transaction hash after submission.</p>
+<label for="action">Action</label><select id="action"></select><form id="prepare"><div id="fields" class="grid"></div><button>Prepare Studio inputs</button></form>
+<div id="prepared" hidden><p>Open this deployed instance in Studio, select your built-in account, and enter these arguments under Write Methods.</p><pre id="args"></pre><div class="row"><button id="copy" class="secondary">Copy arguments</button><a class="button" href="https://studio.genlayer.com/?import-contract=0x6Ea406Bd157Fe1931A28117Db69A4F508Ff53E44" target="_blank" rel="noopener noreferrer">Open GenLayer Studio ↗</a></div><p id="copy-status" role="status"></p></div></section>
+<section class="panel" aria-labelledby="tx-title"><p class="eyebrow">03 / TRACK</p><h2 id="tx-title">Transaction receipt</h2>
+<form id="receipt" class="row"><label>Studio transaction hash<input name="hash" required pattern="0x[0-9a-fA-F]{64}" placeholder="0x…"></label><button>Track receipt</button></form><p id="tx-status" role="status"></p><a id="tx-link" target="_blank" rel="noopener noreferrer" hidden>View in explorer ↗</a></section>
+</main><footer class="wrap"><span>IncidentCredit records billing-credit decisions. It does not transfer funds.</span><a href="https://github.com/amzar1st/IncidentCredit-">Source and verification ↗</a></footer>
+</body></html>
