@@ -38,7 +38,7 @@ def evaluate(source, claim, policy):
         response = gl.nondet.web.get(source["url"])
     except Exception:
         return {**record, "status": "UNAVAILABLE"}
-    if response.status_code != 200:
+    if getattr(response, "status_code", getattr(response, "status", 200)) != 200:
         return {**record, "status": "UNAVAILABLE"}
     if not 0 < len(response.body) <= 16384:
         return {**record, "status": "INVALID_SIZE"}
