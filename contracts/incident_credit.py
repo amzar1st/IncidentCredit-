@@ -4,7 +4,7 @@ import json
 import re
 import time
 
-from genlayer import Address, TreeMap, gl, u256
+from genlayer import TreeMap, gl, u256
 
 HOUR = 3600
 MAX_WINDOW = 7 * 86400
@@ -15,7 +15,7 @@ DIGEST = r"[0-9a-f]{64}"
 
 def require(condition, message):
     if not condition:
-        raise gl.UserError(message)
+        raise ValueError(message)
 
 
 def canonical(record):
@@ -118,11 +118,13 @@ class IncidentCredit(gl.Contract):
         return self.claims[claim_id]
 
     @gl.public.write
-    def register_policy(self, customer: Address, service: str, regions: str,
+    def register_policy(self, customer: str, service: str, regions: str,
                         report_repo: str, review_repo: str, currency: str,
                         minimum_seconds: u256, hourly_minor: u256, cap_minor: u256,
                         exclude_maintenance: bool, challenge_seconds: u256) -> None:
-        provider = gl.message.sender_address
+        provider = str(gl.message.sender_address).lower()
+        require(re.fullmatch(r"0x[0-9a-fA-F]{40}", customer) is not None, "Invalid customer address")
+        customer = customer.lower()
         require(provider != customer, "Provider and customer must differ")
         require(re.fullmatch(TOKEN, service) is not None, "Invalid service")
         region_list = regions.split(",")
@@ -136,7 +138,7 @@ class IncidentCredit(gl.Contract):
         require(1 <= minimum_seconds <= MAX_WINDOW, "Invalid minimum duration")
         require(1 <= hourly_minor <= 10**9 and 1 <= cap_minor <= 10**9, "Invalid rate or cap")
         require(60 <= challenge_seconds <= 7 * 86400, "Challenge period must be 60–604800 seconds")
-        data = {"provider": str(provider).lower(), "customer": str(customer).lower(),
+        data = {"provider": provider, "customer": customer,
                 "service": service, "regions": sorted(region_list), "report_repo": report_repo,
                 "review_repo": review_repo, "currency": currency, "minimum_seconds": int(minimum_seconds),
                 "hourly_minor": int(hourly_minor), "cap_minor": int(cap_minor),
