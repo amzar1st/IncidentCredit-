@@ -1,0 +1,1 @@
+{"schema":"incidentcredit/1","incident":"demo-edge-01","service":"edge-api","regions":{"us-east":{"status":"OUTAGE","start":1767225600,"end":1767231000},"eu-west":{"status":"UNAFFECTED"}}}
